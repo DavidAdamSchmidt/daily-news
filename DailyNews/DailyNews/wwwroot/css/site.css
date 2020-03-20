@@ -117,6 +117,20 @@ app {
     color: red;
 }
 
+.search-box-wrapper {
+    max-width: 800px;
+}
+
+.search-box {
+    width: 100%;
+    margin: 20px 0;
+    padding-left: 4px;
+}
+
+.search-result-container {
+    margin: 20px 0;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

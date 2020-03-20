@@ -1,0 +1,17 @@
+﻿@page "/news"
+@inherits NewsBase
+
+<h4>Start searching for something...</h4>
+
+<div class="search-box-wrapper">
+    <input class="search-box" @bind="SearchTerm" @bind:event="oninput" />
+</div>
+
+<button disabled="@IsUpdateDisabled" @onclick="UpdateNews">Show Results</button>
+
+<div class="search-result-container">
+    @foreach (var news in NewsList)
+    {
+        <div>@news</div>
+    }
+</div>
