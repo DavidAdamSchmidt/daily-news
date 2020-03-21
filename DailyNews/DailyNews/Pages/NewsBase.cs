@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
+﻿using DailyNews.Models;
+using DailyNews.Services;
+using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 
 namespace DailyNews.Pages
 {
     public class NewsBase : ComponentBase
     {
-        public List<string> NewsList { get; } = new List<string>();
+        public NewsData NewsData { get; set; }
 
         public string SearchTerm { get; set; } = string.Empty;
 
         public bool IsUpdateDisabled => SearchTerm.Length == 0;
 
-        public void UpdateNews()
+        [Inject]
+        private NewsService NewsService { get; set; }
+
+        public async Task UpdateNews()
         {
-            NewsList.Add(SearchTerm);
+            NewsData = await NewsService.GetNewsAsync(SearchTerm);
         }
     }
 }

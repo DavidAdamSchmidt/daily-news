@@ -9,9 +9,21 @@
 
 <button disabled="@IsUpdateDisabled" @onclick="UpdateNews">Show Results</button>
 
+@if (NewsData == null)
+{
+    return;
+}
+
+@if (NewsData.Status == "error")
+{
+    <div>Error</div>
+
+    return;
+}
+
 <div class="search-result-container">
-    @foreach (var news in NewsList)
+    @foreach (var article in NewsData.Articles)
     {
-        <div>@news</div>
+        <div class="search-result">@article.Title</div>
     }
 </div>

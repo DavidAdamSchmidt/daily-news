@@ -131,6 +131,10 @@ app {
     margin: 20px 0;
 }
 
+.search-result {
+    margin: 5px 0;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
