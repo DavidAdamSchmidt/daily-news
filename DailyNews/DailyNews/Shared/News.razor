@@ -1,4 +1,6 @@
-﻿<div class="article">
+﻿@using DailyNews.Models
+
+<div class="article">
     <img class="article-image" src="@Article.UrlToImage" alt="ArticleImage" />
     <div class="article-info">
         <div><span>Source: </span>@Article.Source.Name</div>
@@ -11,3 +13,8 @@
         <a href="@Article.Url" target="_blank" noreferer noopener>Read the full article</a>
     </div>
 </div>
+
+@code {
+    [Parameter]
+    public  Article Article { get; set; }
+}

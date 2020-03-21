@@ -1,3 +1,17 @@
-﻿<span class="search-box-wrapper">
+﻿@inject NavigationManager NavigationManager
+
+<span class="search-box-wrapper">
     <input class="search-box" @bind="SearchTerm" @bind:event="oninput" @onkeypress="HandleKeyPress" />
 </span> 
+
+@code {
+    public string SearchTerm { get; set; }
+
+    public void HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            NavigationManager.NavigateTo($"/search/{SearchTerm}");
+        }
+    }
+}
