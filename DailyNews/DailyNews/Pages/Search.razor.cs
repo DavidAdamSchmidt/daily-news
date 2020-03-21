@@ -9,16 +9,21 @@ namespace DailyNews.Pages
     {
         private string _previousSearchTerm;
 
-        public NewsData NewsData { get; set; }
-
-        public string SearchTerm { get; set; } = string.Empty;
-
-        public bool IsUpdateDisabled => SearchTerm.Length == 0;
-
-        public bool IsLoading { get; set; }
+        [Parameter]
+        public string SearchTerm { get; set; }
 
         [Inject]
         private NewsService NewsService { get; set; }
+
+        public NewsData NewsData { get; set; }
+
+        public bool IsLoading { get; set; }
+
+        protected override Task OnParametersSetAsync()
+        {
+            return UpdateNews();
+
+        }
 
         public async Task UpdateNews()
         {

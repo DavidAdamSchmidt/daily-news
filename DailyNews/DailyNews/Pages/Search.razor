@@ -1,12 +1,4 @@
-﻿@page "/news"
-
-<h4>Start searching for something...</h4>
-
-<div class="search-box-wrapper">
-    <input class="search-box" @bind="SearchTerm" @bind:event="oninput" />
-</div>
-
-<button disabled="@IsUpdateDisabled" @onclick="UpdateNews">Show Results</button>
+﻿@page "/search/{searchTerm}"
 
 @if (IsLoading)
 {

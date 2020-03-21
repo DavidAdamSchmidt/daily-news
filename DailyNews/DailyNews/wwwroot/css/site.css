@@ -33,7 +33,7 @@ app {
     .main .top-row {
         background-color: #f7f7f7;
         border-bottom: 1px solid #d6d5d5;
-        justify-content: flex-end;
+        justify-content: space-between;
     }
 
         .main .top-row > a, .main .top-row .btn-link {
@@ -118,17 +118,21 @@ app {
 }
 
 .search-box-wrapper {
-    max-width: 800px;
+    width: 50%;
 }
 
-.search-box, .search-result-container, .spinner {
+.search-result-container, .spinner {
     margin: 20px 0;
 }
 
 .search-box {
+    padding-left: 6px;
     width: 100%;
-    margin: 20px 0;
-    padding-left: 4px;
+    max-width: 800px;
+}
+
+.attribute-link {
+    font-size: 15px;
 }
 
 .spinner {
@@ -272,6 +276,10 @@ app {
     .article-container {
         grid-template-columns: repeat(2, 1fr);
         justify-content: space-between;
+    }
+
+    .attribute-link {
+        font-size: 16px;
     }
 }
 
