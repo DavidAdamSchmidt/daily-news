@@ -13,12 +13,18 @@ namespace DailyNews.Pages
 
         public bool IsUpdateDisabled => SearchTerm.Length == 0;
 
+        public bool IsLoading { get; set; }
+
         [Inject]
         private NewsService NewsService { get; set; }
 
         public async Task UpdateNews()
         {
+            IsLoading = true;
+
             NewsData = await NewsService.GetNewsAsync(SearchTerm);
+
+            IsLoading = false;
         }
     }
 }

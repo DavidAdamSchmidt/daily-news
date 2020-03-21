@@ -121,18 +121,37 @@ app {
     max-width: 800px;
 }
 
+.search-box, .search-result-container, .spinner {
+    margin: 20px 0;
+}
+
 .search-box {
     width: 100%;
     margin: 20px 0;
     padding-left: 4px;
 }
 
-.search-result-container {
-    margin: 20px 0;
-}
-
 .search-result {
     margin: 5px 0;
+}
+
+.spinner {
+    animation: spin 700ms linear infinite;
+    border: 16px solid silver;
+    border-top: 16px solid #337ab7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 #blazor-error-ui {
