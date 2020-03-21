@@ -1,0 +1,13 @@
+﻿<div class="article">
+    <img class="article-image" src="@Article.UrlToImage" alt="ArticleImage" />
+    <div class="article-info">
+        <div><span>Source: </span>@Article.Source.Name</div>
+        <div><span>Author: </span>@Article.Author</div>
+        <div><span>Published: </span>@Article.PublishedAt.ToString("yyyy-MM-dd hh:ss")</div>
+    </div>
+    <div class="article-body">
+        <div class="article-title">@Article.Title</div>
+        <div class="article-content">@Article.Content</div>
+        <a href="@Article.Url" target="_blank" noreferer noopener>Read the full article</a>
+    </div>
+</div>

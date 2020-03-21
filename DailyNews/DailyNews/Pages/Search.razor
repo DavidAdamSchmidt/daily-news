@@ -1,5 +1,4 @@
 ﻿@page "/news"
-@inherits NewsBase
 
 <h4>Start searching for something...</h4>
 
@@ -19,10 +18,10 @@ else if (NewsData?.Status == "error")
 }
 else if (NewsData != null)
 {
-    <div class="search-result-container">
+    <div class="article-container">
         @foreach (var article in NewsData.Articles)
         {
-            <div class="search-result">@article.Title</div>
+            <News Article="@article" />
         }
     </div>
 }

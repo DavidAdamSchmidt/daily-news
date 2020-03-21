@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DailyNews.Pages
 {
-    public class NewsBase : ComponentBase
+    public partial class Search
     {
         private string _previousSearchTerm;
 
