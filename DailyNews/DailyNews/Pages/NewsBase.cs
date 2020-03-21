@@ -7,6 +7,8 @@ namespace DailyNews.Pages
 {
     public class NewsBase : ComponentBase
     {
+        private string _previousSearchTerm;
+
         public NewsData NewsData { get; set; }
 
         public string SearchTerm { get; set; } = string.Empty;
@@ -20,7 +22,13 @@ namespace DailyNews.Pages
 
         public async Task UpdateNews()
         {
+            if (SearchTerm == _previousSearchTerm)
+            {
+                return;
+            }
+
             IsLoading = true;
+            _previousSearchTerm = SearchTerm;
 
             NewsData = await NewsService.GetNewsAsync(SearchTerm);
 
