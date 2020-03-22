@@ -11,7 +11,7 @@
     {
         if (e.Key == "Enter")
         {
-            NavigationManager.NavigateTo($"/search/{SearchTerm}");
+            NavigationManager.NavigateTo($"/search?q={SearchTerm}&page=1");
         }
     }
 }

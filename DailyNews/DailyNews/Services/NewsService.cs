@@ -15,9 +15,9 @@ namespace DailyNews.Services
             _secrets = secrets;
         }
 
-        public async Task<NewsData> GetNewsAsync(string searchTerm)
+        public async Task<NewsData> GetNewsAsync(string searchTerm, int page)
         {
-            var url = $"http://newsapi.org/v2/everything?q={searchTerm}&apiKey={_secrets.Value.NewsApiKey}";
+            var url = $"http://newsapi.org/v2/everything?q={searchTerm}&page={page}&apiKey={_secrets.Value.NewsApiKey}";
 
             var jsonString = await new HttpClient().GetStringAsync(url);
 

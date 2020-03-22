@@ -1,7 +1,9 @@
 ﻿@using DailyNews.Models
 @using DailyNews.Services
-@page "/search/{searchTerm}"
+@page "/search"
+@implements IDisposable
 @inject NewsService NewsService
+@inject NavigationManager NavigationManager
 
 @if (IsLoading)
 {
@@ -11,7 +13,7 @@ else if (NewsData?.Status == "error")
 {
     <div>Error</div>
 }
-else if (NewsData != null)
+else if (NewsData != null && NewsData.TotalResults > 0)
 {
     <div class="article-container">
         @foreach (var article in NewsData.Articles)
@@ -19,35 +21,100 @@ else if (NewsData != null)
             <News Article="@article" />
         }
     </div>
+
+    <div class="pages">
+        @if (_page > 1)
+        {
+            <a href="/search?q=@_searchTerm&page=@(_page - 1)">@((MarkupString)"<") Previous @PageSize</a>
+        }
+        @if ((_page + 1) * PageSize <= MaxResults && _page * PageSize < NewsData.TotalResults)
+        {
+            <a href="/search?q=@_searchTerm&page=@(_page + 1)">Next @PageSize ></a>
+        }
+    </div>
 }
 
 @code {
-    private string _previousSearchTerm;
-
-    [Parameter]
-    public string SearchTerm { get; set; }
+    private const int MaxResults = 100;
+    private const int PageSize = 20;
+    private string _searchTerm;
+    private int _page;
+    private bool _isLoading;
 
     public NewsData NewsData { get; set; }
 
-    public bool IsLoading { get; set; }
-
-    protected override Task OnParametersSetAsync()
+    public bool IsLoading
     {
-        return UpdateNews();
+        get => _isLoading;
+        set
+        {
+            _isLoading = value;
+
+            StateHasChanged();
+        }
     }
 
-    public async Task UpdateNews()
+    public void Dispose()
     {
-        if (SearchTerm == _previousSearchTerm)
+        NavigationManager.LocationChanged -= OnLocationChangedAsync;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateNewsAsync();
+
+        NavigationManager.LocationChanged += OnLocationChangedAsync;
+    }
+
+    private async Task UpdateNewsAsync()
+    {
+        var previousSearchTerm = _searchTerm;
+        var previousPage = _page;
+
+        if (!TryGetQueryValue("q", out _searchTerm) ||
+            !TryGetQueryValue("page", out var page) ||
+            !int.TryParse(page, out _page) ||
+            _page * PageSize > MaxResults)
         {
-            return;
+            NavigationManager.NavigateTo("/");
         }
 
-        IsLoading = true;
-        _previousSearchTerm = SearchTerm;
+        if (_searchTerm != previousSearchTerm || _page != previousPage)
+        {
+            await GetNewsAsync();
+        }
+    }
 
-        NewsData = await NewsService.GetNewsAsync(SearchTerm);
+    private bool TryGetQueryValue(string key, out string value)
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue(key, out var result))
+        {
+            value = result.First();
+
+            return true;
+        }
+
+        value = null;
+
+        return false;
+    }
+
+    private async Task GetNewsAsync()
+    {
+        IsLoading = true;
+
+        NewsData = await NewsService.GetNewsAsync(_searchTerm, _page);
 
         IsLoading = false;
+    }
+
+    private async void OnLocationChangedAsync(object sender, LocationChangedEventArgs e)
+    {
+        if (NavigationManager.Uri.Contains("/search"))
+        {
+            await UpdateNewsAsync();
+        }
     }
 }

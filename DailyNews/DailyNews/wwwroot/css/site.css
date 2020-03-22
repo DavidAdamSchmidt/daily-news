@@ -192,6 +192,13 @@ app {
     font-weight: 600;
 }
 
+.pages {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    width: 100%;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -269,6 +276,10 @@ app {
     .sidebar .collapse {
         /* Never collapse the sidebar for wide screens */
         display: block;
+    }
+
+    .pages {
+        width: 252px;
     }
 }
 

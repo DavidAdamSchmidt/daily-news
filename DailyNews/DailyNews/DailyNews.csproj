@@ -5,4 +5,8 @@
     <UserSecretsId>a2cfccd9-19f7-4713-a6bb-5e4377ef2567</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+  </ItemGroup>
+
 </Project>
